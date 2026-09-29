@@ -1,0 +1,63 @@
+name: Flutter CI/CD Build Workflow
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Validate and Build Apps
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout repository code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Java JDK environment for Android compilation
+      - name: Set up Java Development Kit (JDK)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      # Step 3: Set up Flutter SDK
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      # Step 4: Verify Flutter installation and dependencies
+      - name: Flutter Doctor
+        run: flutter doctor -v
+
+      # Step 5: Install project dependencies
+      - name: Install Dependencies
+        run: flutter pub get
+
+      # Step 6: Code Formatting & Static Analysis
+      - name: Analyze Code
+        run: flutter analyze
+
+      # Step 7: Run Unit Tests
+      - name: Run Tests
+        run: flutter test
+
+      # Step 8: Build Android Release APK
+      - name: Build Android APK
+        run: flutter build apk --release
+
+      # Step 9: Build Web Release (Optional cross-platform target)
+      - name: Build Web Bundle
+        run: flutter build web --release
+
+      # Step 10: Upload Built APK Artifact
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
