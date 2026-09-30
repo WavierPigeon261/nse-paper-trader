@@ -27,7 +27,7 @@ class PortfolioScreen extends StatelessWidget {
             decoration: BoxDecoration(
               color: const Color(0xFF1E293B),
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: pnlColor.withOpacity(0.3), width: 1.5),
+              border: Border.all(color: pnlColor..withValues(alpha: 0.3), width: 1.5),
             ),
             child: Column(
               children: [
