@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 enum OrderType { market, limit }
 enum OrderAction { buy, sell }
 enum OrderStatus { pending, executed, cancelled }
