@@ -73,7 +73,7 @@ class OrdersScreen extends StatelessWidget {
                       margin: const EdgeInsets.only(bottom: 10),
                       child: ListTile(
                         leading: CircleAvatar(
-                          backgroundColor: statusColor.withOpacity(0.2),
+                          backgroundColor: statusColor..withValues(alpha: 0.2),
                           child: Text(
                             order.action.name.substring(0, 1).toUpperCase(),
                             style: TextStyle(color: statusColor, fontWeight: FontWeight.bold),
